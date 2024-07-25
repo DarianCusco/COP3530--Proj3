@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <algorithm>
+#include <map>
+#include "bin.h"
 
 using namespace std;
 
@@ -22,8 +23,7 @@ struct AlienEncounters {
         this->dateSighted = dateSighted;
     };
 };
-
-int main() {
+void ReadFile(vector<AlienEncounters>& dataContainer) {
     ifstream myData;
     myData.open("../data/ufo_sightings.csv");
     if (!myData.is_open()){cout << "file not properly opened" << endl;}
@@ -40,12 +40,10 @@ int main() {
 
         string throwaway;
 
-        vector<AlienEncounters> dataContainer;
-
-
         string line;
         if (getline(myData, line)) {cout << "Header: " << line << endl;}
-        for (int i = 0; i < 10; i++) { //Change to "while (getline(myData, line))" to store all data points
+        //Using 50,000 for testing porpuses
+        for (int i = 0; i < 50000; i++) { //Change to "while (getline(myData, line))" to store all data points
             getline(myData, line);
             stringstream ss(line);
 
@@ -59,6 +57,7 @@ int main() {
             getline(ss, _shape, '"'); //stores shape info
             getline(ss, throwaway, '"');
 
+            //Skips uneeded lines
             getline(ss, throwaway, '"');
             getline(ss, throwaway, '"');
             getline(ss, throwaway, '"');
@@ -81,10 +80,24 @@ int main() {
             dataContainer.push_back(temp);
 
          }
-        for (auto i : dataContainer) {
-        cout << i.state << endl;
-        }   
     }
-    
+}
+map<string, int> getCountryStats(vector<AlienEncounters>& dataContainer) {
+    map<string, int> freq;
+    for (auto dt : dataContainer) {
+        freq[dt.state]++;
+    }
+    return freq;
+}
+int main() {
+    vector<AlienEncounters> dataContainer;
+
+    ReadFile(dataContainer);
+    map<string, int> temp = getCountryStats(dataContainer);
+
+    // for (auto itr : temp) {
+    //     cout << itr.first << " " << itr.second <<endl;
+    // }   
+    equalFreqBins(temp, 10);
     return 0;
 }
