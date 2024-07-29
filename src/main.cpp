@@ -43,8 +43,7 @@ void ReadFile(vector<AlienEncounters>& dataContainer) {
         string line;
         if (getline(myData, line)) {cout << "Header: " << line << endl;}
         //Using 50,000 for testing porpuses
-        for (int i = 0; i < 50000; i++) { //Change to "while (getline(myData, line))" to store all data points
-            getline(myData, line);
+        while (getline(myData, line)) { //Change to "while (getline(myData, line))" to store all data points
             stringstream ss(line);
 
             getline(ss, throwaway, '"');
@@ -82,6 +81,19 @@ void ReadFile(vector<AlienEncounters>& dataContainer) {
          }
     }
 }
+
+void writeBins(vector<vector<pair<string, int>>>dataContainer) {
+    ofstream myNewData("../data/sorted_ufo_sightings.csv");
+
+     for (int i = 0; i < dataContainer.size(); i++) {
+        // cout << "Bins: " << binRanges[i].first << "-" << binRanges[i].second;
+        
+        for (auto j : dataContainer[i]) {
+            myNewData << j.first << " " << j.second  << ",";
+            }
+        myNewData << "\n";
+    }
+}
 map<string, int> getCountryStats(vector<AlienEncounters>& dataContainer) {
     map<string, int> freq;
     for (auto dt : dataContainer) {
@@ -98,6 +110,7 @@ int main() {
     // for (auto itr : temp) {
     //     cout << itr.first << " " << itr.second <<endl;
     // }   
-    equalFreqBins(temp, 10);
+    vector<vector<pair<string, int>>> binnedData = equalFreqBins(temp, 10);
+    writeBins(binnedData);
     return 0;
 }
