@@ -10,4 +10,5 @@ struct AlienEncounters {
 	string shape;
 	string dateSighted;
 	AlienEncounters(string city, string state, string country, string shape, string dateSighted);
+	bool operator==(const AlienEncounters& alien);
 };
