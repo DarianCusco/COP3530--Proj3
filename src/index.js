@@ -1,3 +1,4 @@
+
 let colorCategories = ["blue", "green", "yellow", "orange", "red"]
 
 

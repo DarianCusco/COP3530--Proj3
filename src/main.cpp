@@ -101,6 +101,64 @@ map<string, int> getCountryStats(vector<AlienEncounters>& dataContainer) {
     }
     return freq;
 }
+
+void createJSONFile(string csvFile) {
+    /*
+    What I expect JSON to look like
+    
+    "Group X": 
+    [
+        {"state": y "occurances:" z},
+        {"state": y "occurances:" z},
+        {"state": y "occurances:" z},
+        {"state": y "occurances:" z},
+        {"state": y "occurances:" z},
+    ],
+    */
+    map<int, vector<pair<string, int>>> dataGrouped;
+    int groupNumber = 1;
+
+    ifstream myData;
+    myData.open(csvFile); //opens updated csv file
+
+    if (!myData.is_open()) {cout << "data not loaded properly" << endl;}
+    else {
+        string line;
+        string stateData;
+        while(getline(myData, line)) {
+            stringstream ss(line);
+
+            while(getline(ss, stateData, ',')) {
+                string state;
+                int stateOccurances;
+                stringstream lineStream(stateData);
+                lineStream >> state >> stateOccurances;
+                dataGrouped[(groupNumber)].push_back(make_pair(state, stateOccurances));
+            }
+            groupNumber++;
+        }
+    }
+
+    ofstream outFile("../data/ufo_sightings.JSON");
+    bool groupOne = true; //true if first group
+    outFile << "{\n";
+    for (auto group : dataGrouped) {
+        if (!groupOne) {outFile << ",\n";} //used to seperate groups
+        groupOne = false;
+        bool firstEntry = true; //true if first data point in group
+        outFile << "\"" <<"group: " << group.first << "\": [\n";
+
+        for (auto state : group.second) {
+            if (!firstEntry) {outFile << ",\n";} //Used to seperate entries
+            firstEntry = false;
+
+            outFile << "{ \"state\": \"" << state.first << "\" , \"count\": " << state.second <<"}";
+        }
+        outFile << "\n  ]";
+    }
+    outFile << "\n}\n";
+    
+}
 int main() {
     vector<AlienEncounters> dataContainer;
 
@@ -112,5 +170,6 @@ int main() {
     // }   
     vector<vector<pair<string, int>>> binnedData = equalFreqBins(temp, 10);
     writeBins(binnedData);
+    createJSONFile("../data/sorted_ufo_sightings.csv");
     return 0;
 }
