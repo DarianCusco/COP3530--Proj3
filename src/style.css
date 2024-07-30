@@ -4,5 +4,28 @@
 }
 
 
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
 
+.title-text {
+    display: flex;
+    justify-content: center;
+}
+#colorwheel {
+    display: flex;
+    justify-content: center;
+}
+th {
+    border: 1px solid black;
+    padding: 0.5em;
+    font-weight: 800;
+}
+
+#colorwheel-title {
+    margin-top: 2em;
+    margin-bottom: -0.01em;
+    text-align: center;
+}
 

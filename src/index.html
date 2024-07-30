@@ -7,11 +7,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Alien Encounters in the US by State</h1>
-    <div class="map">
-        <object id="svgMap" type="image/svg+xml" data="../data/US_with_territories.svg"></object>
+    <div class="main-content">
+        <h1 class="title-text">Alien Encounters in the US by State</h1>
+        <div class="map">
+            <object id="svgMap" type="image/svg+xml" data="../data/US_with_territories.svg"></object>
+        </div>
+        <input id="csvFile" type="hidden">
+        <h2 id="colorwheel-title">Number of Occurances</h2>
+        <div id="colorwheel">
+            <table CELLSPACING=0>
+                <th id="gr1">0 - 180</th>
+                <th id="gr2">181 - 353</th>
+                <th id="gr3">354 - 504</th>
+                <th id="gr4">505 - 590</th>
+                <th id="gr5">591 - 761</th>
+                <th id="gr6">762 - 1,019</th>
+                <th id="gr7">1,020 - 1,210</th>
+                <th id="gr8">1,211 - 1,630</th>
+                <th id="gr9">1,631 - 2,296</th>
+                <th id="gr10">2,300+</th>
+            </table>
+        </div>
+        <script src="index.js"></script>
     </div>
-    <input id="csvFile" type="file">
-    <script src="index.js"></script>
 </body>
 </html>
