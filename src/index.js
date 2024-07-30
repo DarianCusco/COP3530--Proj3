@@ -1,6 +1,6 @@
 //Used documentation from https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON
 (function() {
-    fetch('../data/ufo_sightings.JSON')
+    fetch('./data/ufo_sightings.JSON')
     .then(response => response.json())
     .then(data => {
         // for (let groups in data) {
