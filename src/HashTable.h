@@ -2,18 +2,20 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <vector>
 #include "AlienEncounters.h"
 using namespace std;
-// Separate chaining hash table, current idea is to hash by city?
+// Separate chaining w/ linked lists for hash table, current idea is to hash by city
 
 class HashTable {
 private:
-	static const int bucketSize = 50;
+	int bucketLoad = 0;
+	const static int bucketSize = 50;
 	float loadFactor = 0.75f;
-	list<pair<int, AlienEncounters>> bucket[bucketSize];
+	pair<int, vector<AlienEncounters>> bucket[bucketSize];
 public:
 	bool isEmpty();
-	int hashFunction();
+	int hashFunction(int key, string city);
 	void insert(int key, AlienEncounters alien);
 	void remove(int key);
 	AlienEncounters getAlien(int key);
