@@ -9,15 +9,15 @@ bool HashTable::isEmpty() {
 	else
 		return false;
 }
-int HashTable::hashFunction(int key, string city) {
-	// hash by city name
+int HashTable::hashFunction(int key) {
+	string strKey = to_string(key);
 	int hashCode = 0;
-	for (int i = 0; i < city.length(); i++)
-		hashCode += city[i] * pow(31, i);
-	return hashCode;
+	for (int i = 0; i < strKey.length(); i++)
+		hashCode += strKey[i] * pow(31, i);
+	return hashCode % bucketSize;
 }
 void HashTable::insert(int key, AlienEncounters alien) {
-	int hashKey = hashFunction(key, alien.city);
+	int hashKey = hashFunction(key);
 	bool keyExists = false;
 	// if no existing values at hashKey location
 	if (bucket[hashKey].second.size() == 0) {
@@ -37,17 +37,21 @@ void HashTable::insert(int key, AlienEncounters alien) {
 		bucketLoad++;
 	}
 	if (float(bucketLoad / bucketSize) >= loadFactor) {
-		//rehash table
+		rehash();
 	}
 	return;
+}
+/*AlienEncounters HashTable::getAlien(int key) {
+	int hashKey = hashFunction(key);
+	return bucket->second[hashKey];
+}
+void HashTable::rehash() {
+
 }
 void HashTable::remove(int key) {
 	// this function isn't really getting used
 	return;
 }
-AlienEncounters HashTable::getAlien(int key) {
-
-}
 void HashTable::printHashTable() {
 
-}
+}*/
