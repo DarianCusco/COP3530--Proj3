@@ -1,57 +1,74 @@
 #include "HashTable.h"
+#include <cmath>
+
+HashTable::HashTable() {
+	bucket.resize(bucketSize);
+}
 
 bool HashTable::isEmpty() {
-	int sum = 0;
-	for (int i = 0; i < bucketSize; i++)
-		sum += bucket[i].second.size();
-	if (sum == 0)
-		return true;
-	else
-		return false;
+	return bucketLoad == 0;
 }
-int HashTable::hashFunction(int key) {
-	string strKey = to_string(key);
+
+int HashTable::hashFunction(string city) {
 	int hashCode = 0;
-	for (int i = 0; i < strKey.length(); i++)
-		hashCode += strKey[i] * pow(31, i);
-	return hashCode % bucketSize;
-}
-void HashTable::insert(int key, AlienEncounters alien) {
-	int hashKey = hashFunction(key);
-	bool keyExists = false;
-	// if no existing values at hashKey location
-	if (bucket[hashKey].second.size() == 0) {
-		bucket[hashKey].second.push_back(alien);
-		bucketLoad++;
+	for (int i = 0; i < city.length(); i++) {
+		hashCode = (hashCode * 31 + city[i]) % bucketSize;
 	}
-	else {
-		// check for collisions
-		for (int i = 0; i < bucket[hashKey].second.size(); i++) {
-			if (bucket[hashKey].second[i] == alien) {
-				keyExists = true;
-			}
+	return hashCode;
+}
+
+void HashTable::rehash() {
+	int oldBucketSize = bucketSize;
+	bucketSize *= 2;
+	vector<pair<int, vector<AlienEncounters>>> newBucket(bucketSize);
+
+	for (int i = 0; i < oldBucketSize; i++) {
+		for (AlienEncounters& alien : bucket[i].second) {
+			int newHashKey = hashFunction(alien.city);
+			newBucket[newHashKey].second.push_back(alien);
 		}
 	}
+	bucket = newBucket;
+}
+
+void HashTable::insert(AlienEncounters alien) {
+	int hashKey = hashFunction(alien.city);
+	bool keyExists = false;
+	// inserting repeated alien is ignored
+	for (AlienEncounters& existingAlien : bucket[hashKey].second) {
+		if (existingAlien == alien) {
+			keyExists = true;
+			break;
+		}
+	}
+	// separate chaining
 	if (!keyExists) {
 		bucket[hashKey].second.push_back(alien);
 		bucketLoad++;
 	}
+	// check if rehashing is needed
 	if (float(bucketLoad / bucketSize) >= loadFactor) {
 		rehash();
 	}
 	return;
 }
-/*AlienEncounters HashTable::getAlien(int key) {
-	int hashKey = hashFunction(key);
-	return bucket->second[hashKey];
-}
-void HashTable::rehash() {
 
-}
 void HashTable::remove(int key) {
-	// this function isn't really getting used
+	// This function isn't really getting used
 	return;
 }
-void HashTable::printHashTable() {
 
-}*/
+AlienEncounters HashTable::getAlien(int key) {
+	// Implementation needed
+	if (bucket[key].second.size() == 0)
+		return (AlienEncounters("N/A", "N/A", "N/A", "N/A", "N/A"));
+	else if (bucket[key].second.size() == 1)
+		return bucket[key].second[0];
+	else {
+		// somehow find correct alien from separate chaining vector?
+	}
+}
+
+void HashTable::printHashTable() {
+	// Implementation needed
+}
