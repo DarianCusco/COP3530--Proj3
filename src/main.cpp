@@ -102,7 +102,7 @@ map<string, int> getCountryStats(vector<AlienEncounters>& dataContainer) {
     return freq;
 }
 
-void createJSONFile(string csvFile) {
+void createJSONFile(string csvFile, string jsonFile) {
     /*
     What I expect JSON to look like
     
@@ -139,7 +139,7 @@ void createJSONFile(string csvFile) {
         }
     }
 
-    ofstream outFile("../data/ufo_sightings.JSON");
+    ofstream outFile("../data/" + jsonFile);
     bool groupOne = true; //true if first group
     outFile << "{\n";
     for (auto group : dataGrouped) {
@@ -165,11 +165,13 @@ int main() {
     ReadFile(dataContainer);
     map<string, int> temp = getCountryStats(dataContainer);
 
+	//Testing purposes
     // for (auto itr : temp) {
     //     cout << itr.first << " " << itr.second <<endl;
     // }   
+
     vector<vector<pair<string, int>>> binnedData = equalFreqBins(temp, 10);
     writeBins(binnedData);
-    createJSONFile("../data/sorted_ufo_sightings.csv");
+    createJSONFile("../data/sorted_ufo_sightings.csv", "ufo_sightings_test.JSON");
     return 0;
 }
