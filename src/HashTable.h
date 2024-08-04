@@ -22,4 +22,6 @@ public:
 	void remove(int key);
 	AlienEncounters getAlien(int key);
 	void printHashTable();
+	vector<pair<int, vector<AlienEncounters>>> getBucket();
+	int getbucketSize();
 };

@@ -57,6 +57,9 @@ void HashTable::remove(int key) {
 	// This function isn't really getting used
 	return;
 }
+vector<pair<int, vector<AlienEncounters>>> HashTable::getBucket() {
+	return bucket;
+}
 
 AlienEncounters HashTable::getAlien(int key) {
 	// Implementation needed
@@ -68,7 +71,9 @@ AlienEncounters HashTable::getAlien(int key) {
 		// somehow find correct alien from separate chaining vector?
 	}
 }
-
+int HashTable::getbucketSize() {
+	return bucketSize;
+}
 void HashTable::printHashTable() {
 	// Implementation needed
 }
