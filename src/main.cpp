@@ -172,6 +172,6 @@ int main() {
 
     vector<vector<pair<string, int>>> binnedData = equalFreqBins(temp, 10);
     writeBins(binnedData);
-    createJSONFile("../data/sorted_ufo_sightings.csv", "ufo_sightings_test.JSON");
+    createJSONFile("../data/sorted_ufo_sightings.csv", "ufo_sightings.JSON");
     return 0;
 }
