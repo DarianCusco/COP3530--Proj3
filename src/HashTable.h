@@ -1,8 +1,27 @@
-#include "HashTable.h"
-#include <cmath>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include "AlienEncounters.h"
+using namespace std;
 
-HashTable::HashTable() {
-	bucket.resize(bucketSize);
+class HashTable {
+private:
+	int bucketLoad = 0;
+	int bucketSize = 50;
+	float loadFactor = 0.75f;
+	vector<pair<int, vector<AlienEncounters>>> bucket;
+	int hashFunction(string city);
+	void rehash();
+public:
+	HashTable(int newSize);
+	bool isEmpty();
+	void insert(AlienEncounters alien);
+	void printHashTable();
+};
+
+HashTable::HashTable(int newSize) {
+	bucket.resize(newSize);
+	bucketSize = newSize;
 }
 
 bool HashTable::isEmpty() {
@@ -47,33 +66,18 @@ void HashTable::insert(AlienEncounters alien) {
 		bucketLoad++;
 	}
 	// check if rehashing is needed
-	if (float(bucketLoad / bucketSize) >= loadFactor) {
+	if (float(bucketLoad) / float(bucketSize) >= loadFactor)
 		rehash();
-	}
 	return;
 }
 
-void HashTable::remove(int key) {
-	// This function isn't really getting used
-	return;
-}
-vector<pair<int, vector<AlienEncounters>>> HashTable::getBucket() {
-	return bucket;
-}
-
-AlienEncounters HashTable::getAlien(int key) {
-	// Implementation needed
-	if (bucket[key].second.size() == 0)
-		return (AlienEncounters("N/A", "N/A", "N/A", "N/A", "N/A"));
-	else if (bucket[key].second.size() == 1)
-		return bucket[key].second[0];
-	else {
-		// somehow find correct alien from separate chaining vector?
-	}
-}
-int HashTable::getbucketSize() {
-	return bucketSize;
-}
 void HashTable::printHashTable() {
-	// Implementation needed
+	for (int i = 0; i < bucketSize; i++) {
+		if (bucket[i].second.size() == 0)
+			continue;
+		for (auto bItr = bucket[i].second.begin(); bItr != bucket[i].second.end(); bItr++) {
+			cout << "State: " << bItr->state << endl;
+		}
+	}
+	return;
 }
