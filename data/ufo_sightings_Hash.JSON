@@ -1,0 +1,155 @@
+{
+"group: 1": [
+{ "state": "IL" , "count": 2214}
+  ],
+"group: 2": [
+{ "state": "IN" , "count": 1211}
+  ],
+"group: 3": [
+{ "state": "MS" , "count": 350}
+  ],
+"group: 4": [
+{ "state": "CA" , "count": 8175}
+  ],
+"group: 5": [
+{ "state": "KS" , "count": 573}
+  ],
+"group: 6": [
+{ "state": "WI" , "count": 1135}
+  ],
+"group: 7": [
+{ "state": "NY" , "count": 2388}
+  ],
+"group: 8": [
+{ "state": "MN" , "count": 950}
+  ],
+"group: 9": [
+{ "state": "WA" , "count": 3447}
+  ],
+"group: 10": [
+{ "state": "ME" , "count": 512}
+  ],
+"group: 11": [
+{ "state": "SC" , "count": 944}
+  ],
+"group: 12": [
+{ "state": "OH" , "count": 2127}
+  ],
+"group: 13": [
+{ "state": "FL" , "count": 3578}
+  ],
+"group: 14": [
+{ "state": "UT" , "count": 571}
+  ],
+"group: 15": [
+{ "state": "TX" , "count": 3201}
+  ],
+"group: 16": [
+{ "state": "PA" , "count": 2207}
+  ],
+"group: 17": [
+{ "state": "MI" , "count": 1714}
+  ],
+"group: 18": [
+{ "state": "NC" , "count": 1654}
+  ],
+"group: 19": [
+{ "state": "MA" , "count": 1198}
+  ],
+"group: 20": [
+{ "state": "NJ" , "count": 1187}
+  ],
+"group: 21": [
+{ "state": "NH" , "count": 472}
+  ],
+"group: 22": [
+{ "state": "WV" , "count": 418}
+  ],
+"group: 23": [
+{ "state": "LA" , "count": 523}
+  ],
+"group: 24": [
+{ "state": "OR" , "count": 1562}
+  ],
+"group: 25": [
+{ "state": "MT" , "count": 427}
+  ],
+"group: 26": [
+{ "state": "MO" , "count": 1314}
+  ],
+"group: 27": [
+{ "state": "VT" , "count": 246}
+  ],
+"group: 28": [
+{ "state": "CT" , "count": 831}
+  ],
+"group: 29": [
+{ "state": "KY" , "count": 809}
+  ],
+"group: 30": [
+{ "state": "OK" , "count": 674}
+  ],
+"group: 31": [
+{ "state": "AZ" , "count": 2159}
+  ],
+"group: 32": [
+{ "state": "NM" , "count": 630}
+  ],
+"group: 33": [
+{ "state": "NV" , "count": 717}
+  ],
+"group: 34": [
+{ "state": "GA" , "count": 1166}
+  ],
+"group: 35": [
+{ "state": "ID" , "count": 479}
+  ],
+"group: 36": [
+{ "state": "TN" , "count": 1052}
+  ],
+"group: 37": [
+{ "state": "AL" , "count": 591}
+  ],
+"group: 38": [
+{ "state": "IA" , "count": 619}
+  ],
+"group: 39": [
+{ "state": "AR" , "count": 532}
+  ],
+"group: 40": [
+{ "state": "VA" , "count": 1201}
+  ],
+"group: 41": [
+{ "state": "CO" , "count": 1298}
+  ],
+"group: 42": [
+{ "state": "MD" , "count": 784}
+  ],
+"group: 43": [
+{ "state": "NE" , "count": 346}
+  ],
+"group: 44": [
+{ "state": "ND" , "count": 117}
+  ],
+"group: 45": [
+{ "state": "HI" , "count": 239}
+  ],
+"group: 46": [
+{ "state": "AK" , "count": 287}
+  ],
+"group: 47": [
+{ "state": "DE" , "count": 159}
+  ],
+"group: 48": [
+{ "state": "SD" , "count": 161}
+  ],
+"group: 49": [
+{ "state": "RI" , "count": 219}
+  ],
+"group: 50": [
+{ "state": "WY" , "count": 157}
+  ],
+"group: 51": [
+{ "state": "DC" , "count": 7}
+  ]
+}

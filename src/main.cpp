@@ -5,24 +5,10 @@
 #include <sstream>
 #include <map>
 #include "bin.h"
+#include "HashTable.h"
 
 using namespace std;
 
-struct AlienEncounters {
-    string city;
-    string state;
-    string country;
-    string shape;
-    string dateSighted;
-
-    AlienEncounters(string city, string state, string country, string shape, string dateSighted) {
-        this->city = city;
-        this->state = state;
-        this->country = country;
-        this->shape = shape;
-        this->dateSighted = dateSighted;
-    };
-};
 void ReadFile(vector<AlienEncounters>& dataContainer) {
     ifstream myData;
     myData.open("../data/ufo_sightings.csv");
@@ -41,7 +27,8 @@ void ReadFile(vector<AlienEncounters>& dataContainer) {
         string throwaway;
 
         string line;
-        if (getline(myData, line)) {cout << "Header: " << line << endl;}
+
+        getline(myData, line);
         //Using 50,000 for testing porpuses
         while (getline(myData, line)) { //Change to "while (getline(myData, line))" to store all data points
             stringstream ss(line);
@@ -83,7 +70,7 @@ void ReadFile(vector<AlienEncounters>& dataContainer) {
 }
 
 void writeBins(vector<vector<pair<string, int>>>dataContainer) {
-    ofstream myNewData("../data/sorted_ufo_sightings.csv");
+    ofstream myNewData("../data/sorted_ufo_sightings_bins.csv");
 
      for (int i = 0; i < dataContainer.size(); i++) {
         // cout << "Bins: " << binRanges[i].first << "-" << binRanges[i].second;
@@ -91,6 +78,38 @@ void writeBins(vector<vector<pair<string, int>>>dataContainer) {
         for (auto j : dataContainer[i]) {
             myNewData << j.first << " " << j.second  << ",";
             }
+        myNewData << "\n";
+    }
+}
+
+void writeHashFunction(const HashTable& table) {
+    ofstream myNewData("../data/sorted_ufo_sightings_Hash.csv");
+    if (!myNewData.is_open()) {
+        cout << "Failed to open output file." << endl;
+        return;
+    }
+    vector<pair<int, vector<AlienEncounters>>> bucket = table.getBucket();
+
+    vector<pair<string, int>> Data; // string is state, int is visit count
+
+    for (int i = 0; i < table.getBucketSize(); i++) {
+        for (int j = 0; j < bucket[i].second.size(); j++) {
+            // Check if the state already exists in the Data vector
+            auto it = find_if(Data.begin(), Data.end(), [&](const pair<string, int>& p) {
+                return p.first == bucket[i].second[j].state;
+            });
+            if (it == Data.end()) {
+                // If the state doesn't exist, add it with a count of 1
+                Data.push_back(make_pair(bucket[i].second[j].state, 1));
+            } else {
+                // If the state exists, increment the count
+                it->second++;
+            }
+        }
+    }
+
+    for (const auto& entry : Data) {
+        myNewData << entry.first << " " << entry.second << ",";
         myNewData << "\n";
     }
 }
@@ -165,13 +184,24 @@ int main() {
     ReadFile(dataContainer);
     map<string, int> temp = getCountryStats(dataContainer);
 
-	//Testing purposes
+	// Testing purposes
     // for (auto itr : temp) {
     //     cout << itr.first << " " << itr.second <<endl;
     // }   
 
+    //For bins data structure
     vector<vector<pair<string, int>>> binnedData = equalFreqBins(temp, 10);
     writeBins(binnedData);
-    createJSONFile("../data/sorted_ufo_sightings.csv", "ufo_sightings.JSON");
+    createJSONFile("../data/sorted_ufo_sightings_bins.csv", "ufo_sightings_Bins.JSON");
+
+
+    HashTable hashTable;
+    for (const auto& encounter : dataContainer) {
+        hashTable.insert(encounter);
+    }
+
+    //For bins data structure
+    writeHashFunction(hashTable);
+    createJSONFile("../data/sorted_ufo_sightings_Hash.csv", "ufo_sightings_Hash.JSON");
     return 0;
 }
