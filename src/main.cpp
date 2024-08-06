@@ -149,25 +149,6 @@ void createJSONFile(string csvFile, string jsonFile) {
 
 }
 
-void writeHashFunction(HashTable table) {
-	ofstream myNewData("../data/sorted_ufo_sightings_Hash.csv");
-	vector<pair<string, int>> Data; //string is state, int is visit count
-
-	for (int i = 0; i < table.getbucketSize(); i++) {
-		for (int j = 0; j < table.getBucket()[i].second.size(); j++) {
-			// if state doesn't exist in states vector, add it to the list
-			auto it = find(Data.begin(), Data.end(), "hi");
-			if (it != Data.end())
-				Data.push_back(make_pair(table.getBucket()[i].second[j].state, 1));
-			else
-				Data[i].second++;
-		}
-	}
-	for (int i = 0; i < Data.size(); i++) {
-		myNewData << Data[i].first << " " << Data[i].second << ",";
-		myNewData << "\n";
-	}
-}
 int main() {
 	vector<AlienEncounters> dataContainer;
 	ReadFile(dataContainer);
@@ -185,6 +166,6 @@ int main() {
 	for (int i = 0; i < dataContainer.size(); i++) {
 		table.insert(dataContainer[i]);
 	}
-	writeHashFunction(table);
+	table.writeHashFunction();
 	return 0;
 }
