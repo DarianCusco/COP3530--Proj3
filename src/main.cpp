@@ -158,14 +158,20 @@ int main() {
 	// for (auto itr : temp) {
 	//     cout << itr.first << " " << itr.second <<endl;
 	// }
-
+	auto t1 = Clock::now();
 	vector<vector<pair<string, int>>> binnedData = equalFreqBins(temp, 10);
 	writeBins(binnedData);
+	auto t2 = Clock::now();
+	cout << "Time taken by bins: " << t2-t1 << endl;
 	createJSONFile("../data/sorted_ufo_sightings_Bin.csv", "ufo_sightings_test.JSON");
+
+	t1 = Clock::now();
 	HashTable table;
 	for (int i = 0; i < dataContainer.size(); i++) {
 		table.insert(dataContainer[i]);
 	}
 	table.writeHashFunction();
+	t2 = Clock::now();
+	cout << "Time taken by hash table: " << t2-t1 << endl;
 	return 0;
 }
