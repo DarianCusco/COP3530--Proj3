@@ -81,3 +81,23 @@ void HashTable::printHashTable() {
 	}
 	return;
 }
+
+void HashTable::writeHashFunction() {
+	ofstream myNewData("../data/sorted_ufo_sightings_Hash.csv");
+	vector<pair<string, int>> Data; //string is state, int is visit count
+
+	for (int i = 0; i < bucketSize; i++) {
+		for (int j = 0; j < bucket[i].second.size(); j++) {
+			// if state doesn't exist in states vector, add it to the list
+			auto it = find(Data.begin(), Data.end(), "hi");
+			if (it != Data.end())
+				Data.push_back(make_pair(bucket[i].second[j].state, 1));
+			else
+				Data[i].second++;
+		}
+	}
+	for (int i = 0; i < Data.size(); i++) {
+		myNewData << Data[i].first << " " << Data[i].second << ",";
+		myNewData << "\n";
+	}
+}
